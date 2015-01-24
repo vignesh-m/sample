@@ -6,7 +6,7 @@ var mysql=require('mysql');
 var pool=mysql.createPool({
     host : 'localhost',
     user : 'root',
-    password : 'root'
+    password : ''
 })
 
 var isValidPassword =function(user,password){
@@ -49,7 +49,8 @@ passport.use('register',new LocalStrategy({
 	            }
 	            var nuser={username:username,password:password,id:-1};
 	            connection.query('INSERT INTO users.user(username,password) VALUES (\"'+username+'\",\"'+password+'\");', function(err2, rows2, fields2){
-	            	console.log(rows2);
+	            	if(err2) return done(err2);
+	            	// TODO: better way to get id
 	            	nuser.id=rows2.insertId;
 	            	return done(null,nuser);
 	            });
@@ -61,8 +62,29 @@ passport.use('register',new LocalStrategy({
 router.get('/',function (req,res){
 	res.render('login')
 })
-router.post('/login',passport.authenticate('login',{
+router.get('/register',function (req,res){
+	res.render('register')
+})
+router.get('/logout',function (req,res){
+	if(req.isAuthenticated()){
+		req.logout();
+	}
+	res.redirect('/');
+})
+
+router.post('/login', function(req, res, next) {
+  passport.authenticate('login', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/login'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+      console.log('logging in '+user.username);
+      return res.redirect('/');
+    });
+  })(req, res, next);
+});
+router.post('/register',passport.authenticate('register',{
 	successRedirect: '/',
-	failureRedirect: '/login'
+	failureRedirect: '/login/register'
 }))
 module.exports=router;

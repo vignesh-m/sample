@@ -4,10 +4,13 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var multer=require('multer');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
+var upload = require('./routes/upload');
+
 var app = express();
 
 //mysql
@@ -15,7 +18,7 @@ var mysql=require('mysql');
 var pool=mysql.createPool({
     host : 'localhost',
     user : 'root',
-    password : 'root'
+    password : ''
 })
 
 //passport
@@ -38,26 +41,6 @@ passport.deserializeUser(function(id, done) {
     });  
 });
 
-
-pool.getConnection(function (err,connection){
-    connection.query('USE users;', function(err, rows, fields) {
-        if (err) throw err;
-        console.log(rows);
-        connection.query('SELECT * from users.user where username="Admin"', function(err, rows, fields) {
-        if (err) throw err;
-        if(rows[0]) console.log(rows);
-    });
-    });
-    connection.release();
-});
-pool.getConnection(function (err,connection){
-    connection.query('INSERT INTO users.user(username,password) VALUES ("V","L")', function(err, rows, fields) {
-        if (err) throw err;
-        console.log(rows);
-    });
-    connection.release();
-});
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -69,10 +52,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(multer({
+    dest: './uploads/',
+    onFileUploadComplete: function (file) {
+        console.log(file.fieldname + ' uploaded to  ' + file.path)
+    }
+}))
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/login',login);
+app.use('/upload',upload);
 
 
 

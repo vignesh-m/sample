@@ -8,7 +8,12 @@ var pool=mysql.createPool({
     user : 'root',
     password : ''
 })
-
+var isAuth=function (req,res,next){
+	if(req.isAuthenticated())
+		next();
+	else
+		res.end('Login first');
+}
 var isValidPassword =function(user,password){
 	return user.password==password;
 }
@@ -65,7 +70,7 @@ router.get('/',function (req,res){
 router.get('/register',function (req,res){
 	res.render('register')
 })
-router.get('/logout',function (req,res){
+router.get('/logout',isAuth,function (req,res){
 	if(req.isAuthenticated()){
 		req.logout();
 	}

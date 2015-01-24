@@ -1,0 +1,6 @@
+<p> List of files uploaded by <%= user.username %> </p>
+<ul>
+	<% for(var i=0;i<list.length;i++){ %>
+		<li><%=list[i].orgfilename%></li>
+	<% }; %>
+</ul>

@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %> , <%= user %></p>
-  </body>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title><%=title%></title>
+	<script src="jquery-1.11.1.min.js"></script>
+	<script src="bootstrap.js"></script>
+	<link rel="stylesheet" href="stylesheets/style.css">
+	<link rel="stylesheet" href="stylesheets/bootstrap.css">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class='container-fluid '>
+			<ul class="nav navbar-nav navbar-left">
+				<li><a class="btn btn-link" href="/upload"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload a file</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+		        <li><a href="/login/logout">Sign Out</a></li>
+		        <li class="dropdown">
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
+			        <ul class="dropdown-menu" role="menu">
+			            <li><a href="/users">Profile</a></li>
+			            <li><a href="/upload/list">Upload List</a></li>
+			            <li class="divider"></li>
+			            <li><a href="#">Edit Profile</a></li>
+		        	</ul>
+		        </li>
+		    </ul>
+		</div>
+	</nav>
+	<div class="jumbotron">
+		<p ><h1 align='center'>Hello , <%=user.username%><h1></p>
+	</div>
+</body>
 </html>

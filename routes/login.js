@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var bcrypt=require('bcrypt');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
 var mysql=require('mysql');
@@ -8,6 +9,7 @@ var pool=mysql.createPool({
     user : 'root',
     password : ''
 })
+var salt=bcrypt.genSaltSync(1789);
 var isAuth=function (req,res,next){
 	if(req.isAuthenticated())
 		next();
@@ -15,7 +17,7 @@ var isAuth=function (req,res,next){
 		{req.flash('login','LOGIN');res.redirect('/login')}
 }
 var isValidPassword =function(user,password){
-	return user.password==password;
+	return bcrypt.compareSync(password,user.password);
 }
 function checkAlpha(str)
 {
@@ -67,7 +69,7 @@ passport.use('register',new LocalStrategy({
 	            	return done(null,false,{message:'Choose a password'});
 	            }
 	            var nuser={username:username,password:password,id:-1};
-	            connection.query('INSERT INTO users.user(username,password) VALUES (\"'+username+'\",\"'+password+'\");', function(err2, rows2, fields2){
+	            connection.query('INSERT INTO users.user(username,password) VALUES (\"'+username+'\",\"'+bcrypt.hashSync(password,3)+'\");', function(err2, rows2, fields2){
 	            	if(err2) return done(err2);
 	            	// TODO: better way to get id
 	            	nuser.id=rows2.insertId;

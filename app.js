@@ -10,7 +10,6 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 var login = require('./routes/login');
 var upload = require('./routes/upload');
-
 var app = express();
 
 //mysql
@@ -20,7 +19,6 @@ var pool=mysql.createPool({
     user : 'root',
     password : ''
 })
-
 //passport
 var passport = require('passport');
 var expressSession = require('express-session');

@@ -1,0 +1,2 @@
+create table user (username VARCHAR(100), password VARCHAR(100) , id INT AUTO_INCREMENT , PRIMARY KEY (id));
+create table uploads (userid INT, filename VARCHAR(100) , id INT AUTO_INCREMENT ,orgfilename VARCHAR(100), PRIMARY KEY (id));

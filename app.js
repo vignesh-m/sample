@@ -14,7 +14,7 @@ var app = express();
 
 //mysql
 var mysql=require('mysql');
-var pool=mysql.createPool({
+pool=mysql.createPool({
     host : 'localhost',
     user : 'root',
     password : ''

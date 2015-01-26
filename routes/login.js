@@ -4,11 +4,11 @@ var bcrypt=require('bcrypt');
 var passport=require('passport');
 var LocalStrategy=require('passport-local').Strategy;
 var mysql=require('mysql');
-var pool=mysql.createPool({
-    host : 'localhost',
-    user : 'root',
-    password : ''
-})
+// var pool=mysql.createPool({
+//     host : 'localhost',
+//     user : 'root',
+//     password : ''
+// })
 var salt=bcrypt.genSaltSync(1789);
 var isAuth=function (req,res,next){
 	if(req.isAuthenticated())

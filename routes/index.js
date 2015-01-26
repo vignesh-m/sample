@@ -9,7 +9,7 @@ var isAuth=function (req,res,next){
 }
 
 router.get('/', isAuth,function(req, res, next) {
-	res.render('index', { title: 'Express' , user : req.user});
+	res.render('index', { title: 'Hello ' , user : req.user});
 });
 
 module.exports = router;

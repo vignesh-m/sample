@@ -27,8 +27,8 @@ passport.use('login',new LocalStrategy({
 	passReqToCallback : true
 	},
 	function(req,username,password,done){
-		if(!checkAlpha(username)){
-			return done(null,false,{message:"Username can contain only alphabets,numbers, _ or -"});
+		if(!checkAlpha(username) || !checkAlpha(password) ){
+			return done(null,false,{message:"Username and Password can contain only alphabets,numbers, _ or -"});
 		}
 		pool.getConnection(function (err,connection){
 	        connection.query('SELECT * from users.user where username=\"'+username+'\"', function(err, rows, fields) {

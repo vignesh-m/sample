@@ -35,3 +35,16 @@ input[readonly] {
   background-color: white !important;
   cursor: text !important;
 }
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+div.horizontalgap {
+  float:left;
+  overflow:hidden;
+  height:1px;
+  width:20%;
+}

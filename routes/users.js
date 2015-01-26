@@ -6,10 +6,12 @@ var isAuth=function (req,res,next){
 	if(req.isAuthenticated())
 		next();
 	else
-		res.end('Login first');
+		{req.flash('login','LOGIN');res.redirect('/login')}
 }
 router.get('/', isAuth,function(req, res, next) {
 	res.render('user',{user:req.user});
 });
-
+router.get('/edit',isAuth,function (req,res){
+	res.render('useredit',{user:req.user});
+})
 module.exports = router;

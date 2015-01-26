@@ -1,6 +1,41 @@
-<p> List of files uploaded by <%= user.username %> </p>
-<ul>
-	<% for(var i=0;i<list.length;i++){ %>
-		<li><a href="/upload/get?filename=<%=list[i].filename%>"><%=list[i].orgfilename%></a></li>
-	<% }; %>
-</ul>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title><%=title%></title>
+	<script src="/jquery-1.11.1.min.js"></script>
+	<script src="/bootstrap.js"></script>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.css">
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class='container-fluid '>
+			<ul class="nav navbar-nav navbar-left">
+				<li><a class="btn btn-link" href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a></li>
+				<li><a class="btn btn-link" href="/upload"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Upload a file</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+		        <li><a href="/login/logout">Sign Out</a></li>
+		        <li class="dropdown">
+			        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Account <span class="caret"></span></a>
+			        <ul class="dropdown-menu" role="menu">
+			            <li><a href="/users">Profile</a></li>
+			            <li><a href="/upload/list">Upload List</a></li>
+		        	</ul>
+		        </li>
+		    </ul>
+		</div>
+	</nav>
+	<div class="page-header"> <h2> <%= user.username %>'s Files  </h2></p>
+	<ul class="list-group">
+		<% for(var i=0;i<list.length;i++){ %>
+			<li class="list-group-item">
+				<a href="/upload/get?filename=<%=list[i].filename%>"><%=list[i].orgfilename%></a>
+			</li>
+		<% }; %>
+	</ul>
+</body>
+</html>
+
